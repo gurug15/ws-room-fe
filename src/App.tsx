@@ -8,7 +8,7 @@ function App() {
     return (
         <div className=" flex justify-center items-center gap-2 w-screen h-screen bg-black text-white">
             <ChatBox/>
-            <ChatBox/>
+            {/* <ChatBox/> */}
         </div>
     );
 }
