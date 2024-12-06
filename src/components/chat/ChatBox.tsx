@@ -5,7 +5,7 @@ import Sendmsg from "./Sendmsg";
 import { Message } from "../../types";
 
 
-const WS_URL = "ws://localhost:4000";
+const WS_URL = "ws://ws-room-be.onrender.com";
 
 
 export default function ChatBox() {
