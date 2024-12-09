@@ -5,7 +5,7 @@ import Sendmsg from "./Sendmsg";
 import { Message } from "../../types";
 
 
-const WS_URL = "ws://ws-room-be.onrender.com";
+const WS_URL = "ws://localhost:4000";
 
 
 export default function ChatBox() {
@@ -15,6 +15,7 @@ export default function ChatBox() {
     const [messages, setMessages] = useState<Message[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
 
+
     
     const joinRoom = () => {
         if (socket && currentRoom) {
@@ -23,6 +24,7 @@ export default function ChatBox() {
                 payload: { roomId: currentRoom }
             }));
         }
+        
     };
 
     const handleSendMessage = () => {
@@ -41,11 +43,23 @@ export default function ChatBox() {
         setInput(prev => ({ ...prev, content: '' }));
         inputRef.current?.focus();
     };
+     
+    // const fetchMessages = async ()=>{
+    //     try {
+    //         const response = await fetch(`http://localhost:4000/messages/${currentRoom}`,{
+    //             method: "GET"
+    //         })
+    //         const messages = await response.json()
+
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }   
 
     useEffect(() => {
         const ws = new WebSocket(WS_URL);
         setSocket(ws);
-
+       // fetchMessages()
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
             switch (data.type) {
@@ -85,7 +99,7 @@ export default function ChatBox() {
             </div>
         </div>
         <div className="bg-gray-700 h-[1px] w-full"></div>
-        <div className="h-1/6 mt-3  ">
+        <div className="h-1/6 mt-3 mx-2 ">
             <Sendmsg ref={inputRef} value={input.content} placeholder="Send Message..." onChange={(e)=>setInput((prev)=>({...prev, roomId:currentRoom,content:e.target.value}))} onClick={handleSendMessage}/>
         </div>
         </div>
